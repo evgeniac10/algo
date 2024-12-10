@@ -10,7 +10,7 @@ package PracAlgo.GR;
 public class ChangeMoney {
     public static void main(String[] args) {
         int money=654;
-        int[] changeMoney=new int[5];//500 , 100 , 50 , 10 , 1
+        int[] changeMoney= {500,100,50,10,1};
         int count=0;
         //동전의 최소 개수를 위해서 가장 큰 금액 부터 거슬러야할 금액과 비교한다.
         for(int index=0; index<changeMoney.length; index++){
