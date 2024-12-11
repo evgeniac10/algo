@@ -35,6 +35,8 @@ public class num10773 {
                 stack.pop();
         }
         for(int j=0;j<stack.size();j++){
+//            System.out.println("stack.size() = " + stack.size());
+//            System.out.println("stack.toString() = " + stack.toString());
             result+=stack.pop();
         }
         System.out.println(result);
