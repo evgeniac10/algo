@@ -24,12 +24,14 @@ public class num10773 {
                 //입력되는 정수는 0아니면 모두 다 양수이기에
                 if(num>0)   {
                     stack.push(num);
+                    continue;
                 }
                 //스택이 비어있는 경우에 pop()을 한다면 에러가 발생한다.(발견하지 못했던 문제점)
                 if(stack.isEmpty())    {
                     continue;
                 }
                 //입력받은 정수가 0이고 스택이 비어있지 않으니 꺼내어준다.
+                //여기에 else를 안쓰게 될 경우 if절이 끝나고 push해놓고 pop을 하게 된다 -> else를 쓰던지 if(num>0)안에 continue를 하던지
                 stack.pop();
         }
         for(int j=0;j<stack.size();j++){
