@@ -34,7 +34,8 @@ public class num10773 {
                 //여기에 else를 안쓰게 될 경우 if절이 끝나고 push해놓고 pop을 하게 된다 -> else를 쓰던지 if(num>0)안에 continue를 하던지
                 stack.pop();
         }
-        for(int j=0;j<stack.size();j++){
+
+        for(int j=stack.size();j>0;j--){
 //            System.out.println("stack.size() = " + stack.size());
 //            System.out.println("stack.toString() = " + stack.toString());
             result+=stack.pop();
