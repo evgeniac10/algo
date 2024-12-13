@@ -15,6 +15,7 @@ public class num1260 {
         int node = sc.nextInt();
         int edge = sc.nextInt();
         int startNode = sc.nextInt();
+        //노드가 거쳐가는 순서를 저장할 배열 (인덱스는 순서번호 , 인덱스 안의 값은 노드 번호)
         int[] dfsResult = new int [node];
         int[] bfsResult = new int [node];
 
@@ -29,23 +30,26 @@ public class num1260 {
         }
 
         //방문하였는지 체크 할 수 있는 boolean형 배열 , 방문하였다면 true , 방문하지 않았다면 false
+        //번호에 맞게 방문처리 하기 위해서 배열의 크기를 1을 더한다. (인덱스 번호가 곧 노드 번호)
         boolean[] dfsVisited = new boolean[node+1];
         boolean[] bfsVisited = new boolean[node+1];
         //dfs 시작 노드 방문
         int dfsIndex = 0;
         dfs(graph,dfsResult,startNode,dfsVisited,dfsIndex);
+
         //bfs 시작 노드 방문
-//        int bfsIndex = 0;
-//        bfs(graph,dfsResult,startNode,bfsVisited);
+        int bfsIndex = 0;
+        //우선순위로 작은순서대로 노드가 방문할 수 있도록
+        bfs(graph,bfsResult,startNode,bfsVisited,bfsIndex);
 
         //dfs, bfs 결과 출력하기
         for(int i=0; i<dfsResult.length; i++){
             System.out.print(dfsResult[i] + " ");
         }
-//        System.out.println();
-//        for(int i=0; i<bfsResult.length; i++){
-//            System.out.print(bfsResult[i] + " ");
-//        }
+        System.out.println();
+        for(int i=0; i<bfsResult.length; i++){
+            System.out.print(bfsResult[i] + " ");
+        }
     }
     /*
     시작하는 노드에서 출발해서 연결되어있는 노드를 찾는데, 연결됨을 알 수 있는 방법은 graph를 통해서 (1이면 연결됨)
@@ -65,7 +69,28 @@ public class num1260 {
         }
         return;
     }
-//    static void bfs(int[][] graph, int[] dfsResult, int startNode,boolean[] visited){
-//        for(int row=startNode; row<)
-//    }
+    /*
+    시작하는 노드에서 그래프를 이용하여 연결이 되어있는지를 찾는다.
+    연결이 되어있다면(1) Result배열에 작은 순서대로 담는다(col).
+    방문한 col은 true로 방문 처리를 한 뒤 Result의 다음 인덱스를 startNode로 잡아서 실행한다.
+     */
+    static void bfs(int[][] graph, int[] bfsResult, int startNode,boolean[] visited, int index){
+        visited[startNode]=true;
+        bfsResult[index]=startNode;
+
+        ArrayList<Integer> list = new ArrayList<>();
+        //작은 번호 순서대로 돌면서 연결되어있는지 그리고 방문한 적이 있는지 체크하기
+        for(int col=0; col<graph.length; col++){
+            if(!visited[col] && graph[startNode][col] == 1){
+                bfsResult[++index] = col;
+                visited[col]=true;
+                list.add(col);
+            }
+        }
+        //result 배열에서 담긴 startnode에서 다음 인덱스에 담긴 node를 bfs함수의 startNode로 다시 넣는다.
+        for(int num=0; num<list.size(); num++){
+            bfs(graph, bfsResult, list.get(num), visited, index);
+        }
+        return;
+    }
 }
