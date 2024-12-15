@@ -15,10 +15,12 @@ public class num1260 {
         int node = sc.nextInt();
         int edge = sc.nextInt();
         int startNode = sc.nextInt();
-        //노드가 거쳐가는 순서를 저장할 배열 (인덱스는 순서번호 , 인덱스 안의 값은 노드 번호)
-        int[] dfsResult = new int [node];
-        int[] bfsResult = new int [node];
+//        //노드가 거쳐가는 순서를 저장할 배열 (인덱스는 순서번호 , 인덱스 안의 값은 노드 번호)
+//        int[] dfsResult = new int [node];
+//        int[] bfsResult = new int [node];
 
+        //노드가 진행하는 경로 결과를 담는다.
+        StringBuilder str = new StringBuilder();
         //노드끼리 연결관계를 나타내는 그래프 초기값은 0으로 세팅 , 노드번호는 1부터 시작하니 +1을 하여 번호를 맞춰준다.
         int[][] graph = new int[node+1][node+1];
 
@@ -34,22 +36,22 @@ public class num1260 {
         boolean[] dfsVisited = new boolean[node+1];
         boolean[] bfsVisited = new boolean[node+1];
         //dfs 시작 노드 방문
-        int dfsIndex = 0;
-        dfs(graph,dfsResult,startNode,dfsVisited,dfsIndex);
-
+        dfs(graph,str,startNode,dfsVisited);
+        str.append("\n");
         //bfs 시작 노드 방문
-        int bfsIndex = 0;
         //우선순위로 작은순서대로 노드가 방문할 수 있도록
-        bfs(graph,bfsResult,startNode,bfsVisited,bfsIndex);
+        int index =0;
+        bfs(graph,str,startNode,bfsVisited,index);
 
-        //dfs, bfs 결과 출력하기
-        for(int i=0; i<dfsResult.length; i++){
-            System.out.print(dfsResult[i] + " ");
-        }
-        System.out.println();
-        for(int i=0; i<bfsResult.length; i++){
-            System.out.print(bfsResult[i] + " ");
-        }
+//        //dfs, bfs 결과 출력하기
+//        for(int i=0; i<dfsResult.length; i++){
+//            System.out.print(dfsResult[i] + " ");
+//        }
+//        System.out.println();
+//        for(int i=0; i<bfsResult.length; i++){
+//            System.out.print(bfsResult[i] + " ");
+//        }
+        System.out.println(str.toString());
     }
     /*
     시작하는 노드에서 출발해서 연결되어있는 노드를 찾는데, 연결됨을 알 수 있는 방법은 graph를 통해서 (1이면 연결됨)
@@ -57,14 +59,14 @@ public class num1260 {
     방문을 한 노드(col)를 기반으로 다시 (row)번으로 놓고 연결되어있는 노드를 찾고 방문처리한다.
     더이상 방문 할 노드가 없다면 다시 돌아간다.
      */
-    static void dfs(int[][] graph, int[] dfsResult, int startNode, boolean[] visited, int index){
-        dfsResult[index] = startNode;
+    static void dfs(int[][] graph, StringBuilder result, int startNode, boolean[] visited){
+        result.append(startNode).append(" ");
         visited[startNode] = true;
 
         for(int col=0; col<graph.length; col++){
             //시작노드를 행,목표하는 노드를 열로 하여 0과1로 연결되어있는지 확인 && 방문한적 없는 노드라면 방문처리 후 result에 담는다.
             if(graph[startNode][col] == 1 && !visited[col]){
-                dfs(graph, dfsResult, col, visited,++index);
+                dfs(graph, result, col, visited);
             }
         }
         return;
@@ -74,23 +76,7 @@ public class num1260 {
     연결이 되어있다면(1) Result배열에 작은 순서대로 담는다(col).
     방문한 col은 true로 방문 처리를 한 뒤 Result의 다음 인덱스를 startNode로 잡아서 실행한다.
      */
-    static void bfs(int[][] graph, int[] bfsResult, int startNode,boolean[] visited, int index){
-        visited[startNode]=true;
-        bfsResult[index]=startNode;
-
-        ArrayList<Integer> list = new ArrayList<>();
-        //작은 번호 순서대로 돌면서 연결되어있는지 그리고 방문한 적이 있는지 체크하기
-        for(int col=0; col<graph.length; col++){
-            if(!visited[col] && graph[startNode][col] == 1){
-                bfsResult[++index] = col;
-                visited[col]=true;
-                list.add(col);
-            }
-        }
-        //result 배열에서 담긴 startnode에서 다음 인덱스에 담긴 node를 bfs함수의 startNode로 다시 넣는다.
-        for(int num=0; num<list.size(); num++){
-            bfs(graph, bfsResult, list.get(num), visited, index);
-        }
-        return;
+    static void bfs(int[][] graph, StringBuilder result, int startNode,boolean[] visited,int index){
+        
     }
 }
