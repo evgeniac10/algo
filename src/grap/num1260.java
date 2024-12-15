@@ -39,9 +39,8 @@ public class num1260 {
         dfs(graph,str,startNode,dfsVisited);
         str.append("\n");
         //bfs 시작 노드 방문
-        //우선순위로 작은순서대로 노드가 방문할 수 있도록
-        int index =0;
-        bfs(graph,str,startNode,bfsVisited,index);
+        Queue<Integer> que = new LinkedList<>();
+        bfs(graph,str,startNode,bfsVisited,que);
 
 //        //dfs, bfs 결과 출력하기
 //        for(int i=0; i<dfsResult.length; i++){
@@ -76,7 +75,20 @@ public class num1260 {
     연결이 되어있다면(1) Result배열에 작은 순서대로 담는다(col).
     방문한 col은 true로 방문 처리를 한 뒤 Result의 다음 인덱스를 startNode로 잡아서 실행한다.
      */
-    static void bfs(int[][] graph, StringBuilder result, int startNode,boolean[] visited,int index){
-        
+    static void bfs(int[][] graph, StringBuilder result, int startNode,boolean[] visited,Queue<Integer>que){
+        que.add(startNode);
+        visited[startNode]=true;
+
+        while(!que.isEmpty()){
+            startNode = que.poll();
+            result.append(startNode).append(" ");
+            for(int col=0; col<graph.length; col++){
+                if(graph[startNode][col] == 1 && !visited[col]){
+                    que.add(col);
+                    visited[col] = true;
+                }
+            }
+        }
+
     }
 }
