@@ -19,13 +19,6 @@ class MeetingRoom implements Comparable<MeetingRoom>{
     }
 
     @Override
-    public String toString() {
-        return "MeetingRoom " +
-                "startTime=" + startTime +
-                ", finishTime=" + finishTime ;
-    }
-
-    @Override
     public int compareTo(MeetingRoom o2) {
         /*
         종료시간이 같을 경우 시작시간이 종료시간과 가까운 시간이 곧 사용시간이 짧은 것을 의미한다.
@@ -49,13 +42,17 @@ public class num1931 {
             int finishTime = sc.nextInt();
             mr[i] = new MeetingRoom(startTime,finishTime);
         }
-        for(MeetingRoom m : mr){
-            System.out.println(m.toString());
-        }
         Arrays.sort(mr);
-        System.out.println("----------------------------------------------");
-        for(MeetingRoom m : mr){
-            System.out.println(m.toString());
+
+        int cnt = 0;
+        int end = 0;
+        for(int i=0; i<N; i++){
+            if(end<=mr[i].startTime) {
+                end = mr[i].finishTime;
+                cnt++;
+            }
         }
+        System.out.println(cnt);
+
     }
 }
