@@ -13,13 +13,15 @@ public class num1316 {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
-        int cnt=N;
+        int cnt=0;
 
         for(int i=0;i<N;i++){
             //alphabet 배열은 문장에서 알파벳이 사용되었는지를 확인 해 줄 수 있는 배열이다.인덱스번호는 곧 알파벳을 뜻한다.
             boolean[] alphabet = new boolean[26];
             String str = sc.next();
             int preChar = 0;
+
+            boolean test = true;
 
             for(int j=0;j<str.length();j++){
                 char ch = str.charAt(j);
@@ -29,7 +31,7 @@ public class num1316 {
                     preChar = nowChar;
                     //같지 않은 상태인데 사용한 적이 있다 == 그룹단어 아니다.
                     if(alphabet[nowChar]){
-                        cnt--;
+                        test = false;
                         break;
                     }
                     //같지 않은 상태인데 사용한 적이 없다 == 다음 문자로 넘어가도 좋다.
@@ -41,10 +43,11 @@ public class num1316 {
                 //사용한 적이 없는 알파벳은 사용 처리 해주고 직전 문자를 나타내는 preChar에다가 넣어주기
                 else{
                     preChar = nowChar;
+                    alphabet[nowChar] = true;
                     continue;
                 }
             }
-
+            if(test) cnt ++;
         }
         System.out.println(cnt);
     }
