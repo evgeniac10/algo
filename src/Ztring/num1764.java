@@ -1,6 +1,7 @@
 package Ztring;
 
 import java.util.*;
+import java.io.*;
 
 /**
  * 입력값이 N은 500,000 M은 500,000이다. 그래서 입력횟수가 250,000,000,000번이다.
@@ -9,32 +10,41 @@ import java.util.*;
  * 10^9 / 3 = (약) 10^8 * 3이다. 이는 1초당 10^8번 연산을 한다고 생각할 수 있다.
  * 그렇다면 이 문제는 250,000,000,000번 입력되는데 아래와 같이 내가 알고리즘을 구상했다면 시간복잡도가 O(N^2)으로
  * 2500초가 걸린다.
+ *
+ * 해쉬 맵 자료구조를 이용하여 시간복잡도를 O(N)으로 변경한다면 시간초과가 나지 않을것이다.
  */
 public class num1764 {
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        String[] strArr1 = new String[N];
-        for(int i=0; i<N; i++){
-            String str = sc.next();
-            strArr1[i] = str;
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+        for(int i=0;i<N; i++){
+            StringTokenizer nameToken = new StringTokenizer(br.readLine());
+            String name = nameToken.nextToken();
+            map.put(name,1);
         }
-        String[] strArr2 = new String[M];
-        for(int i=0; i<M; i++){
-            String str = sc.next();
-            strArr2[i] = str;
-        }
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i<N; i++){
-            String name = strArr1[i];
-            for(int j=0; j<M; j++){
-                //==과 equals 비교하여 기억하기
-                if(name.equals(strArr2[j]))
-                    sb.append(name).append("\n");
+
+        ArrayList<String> list = new ArrayList<>();
+        int cnt = 0;
+        for(int j=0; j<M; j++){
+            StringTokenizer nameToken = new StringTokenizer(br.readLine());
+            String name = nameToken.nextToken();
+            if(map.containsKey(name)){
+                cnt++;
+                list.add(name);
             }
         }
-        System.out.print(sb);
+        Collections.sort(list);
+        System.out.println(list.size());
+        for(int size =0; size<list.size(); size++){
+            System.out.println(list.get(size));
+        }
+
+
+
     }
 }
